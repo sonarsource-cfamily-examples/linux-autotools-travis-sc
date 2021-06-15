@@ -1,3 +1,11 @@
+= SonarCloud Analysis with Travis CI
+
+This is an example of a Travis CI configuration that runs a Linux-based GNU Autotools build and a SonarCloud analysis.
+You can see the results of the analysis https://sonarcloud.io/dashboard?id=sc-sq-c-family-examples_linux-autotools-travis-sc[on SonarCloud].
+
+You can find the GitHub Action in link:.travis.yml[.travis.yml].
+
+
 = Linux\Autotools
 
 A build of the https://github.com/sc-sq-c-family-examples/code[code repository] on a Linux platform using GNU Autotools build system.
