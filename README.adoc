@@ -1,7 +1,7 @@
 = C++ example project scanned on SonarCloud using Travis CI
 // URIs:
 :uri-qg-status: https://sonarcloud.io/dashboard?id=sc-sq-c-family-examples_linux-autotools-travis-sc
-:img-qg-status: https://sonarcloud.io/api/project_badges/measure?project=sc-sq-c-family-examples_linux-autotools-travis-sc
+:img-qg-status: https://sonarcloud.io/api/project_badges/measure?project=sc-sq-c-family-examples_linux-autotools-travis-sc&metric=alert_status
 
 image:{img-qg-status}[Quality Gate Status,link={uri-qg-status}]
 
