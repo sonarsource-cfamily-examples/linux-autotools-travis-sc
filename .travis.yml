@@ -18,8 +18,7 @@ addons:
       - g++-9
 
 env:
-  - CXX=g++-9
-  - BUILD_WRAPPER_OUT_DIR=build_wrapper_output_folder
+  - CXX=g++-9 BUILD_WRAPPER_OUT_DIR=build_wrapper_output_folder
 
 script:
   # Prepare the build system
