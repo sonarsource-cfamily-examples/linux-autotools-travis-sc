@@ -1,8 +1,6 @@
 language: cpp
-dist: bionic
+dist: jammy
 os: linux
-
-sudo: false
 
 compiler: gcc
 
@@ -10,27 +8,26 @@ addons:
   sonarcloud:
     organization: "sonarsource-cfamily-examples"
     token:
-      secure: "Cjz5MHr7Lzay8EKR9paLMKvHsbmDYpZCqPBuCp7+srnQ/Ai0rj8UCm+qrWKshN8l93kHJwgV1P9fEQjC0Huzn9WT8SNpwMnGd+uxeJ62VOQldN3I4FZYYH405Fq/t16Wr6iSzucFdyRmPnLgaKzCvloDYOqHIl/sY5dFk2XMYKaHMDGPzELHmVCWRrxus254RxX58yLWCZ6Ys2V5cu3amTTFEsZDZ+/Evp40Ap0SpUWNuyCvto4B6lvyA6pZHqdY71dMD2cio54I0c366RqhPEtK9k6ZJ1bV184YEmyc+Q+m8egvQxzeSKCLwaXBi3UiywVacSDjx7MpuXzxn4pwdTI1aYl9zbLFX3++wmbGU/VmAwRnH4/QiZfQr2RfCj2LCQSjRziMPcak6v18Z/Xhw0G97+HoSvmU3oBHChfCe9OupCecAY25S+5rKvYjAWZdXPV+6AVMOljxZ3Tzpz7RC/nQDS7UNCckA+mYg6R5C37UTN9K+pVIfe8hlHs/A4Jny0eycmsOG/pAmRWnvI19oHG8ILKCd6oFcE1/AjZFt8S/Z1pxkH8S7HjV3UoiQZOumzTyJZDEdFGMP7j6YAnYf6oGY8ENcNZCsBxyGiGX+i8UBt8OD+ItC3Lue89i5JSvBXXpnF9U41GtD9E0CX/NG0qQyw2uQds+CaSZU2vNEao="
+      secure: "YEstmCSZEwCI3oPuND1G1EUB3tJ51OKbJL59S90Gt61E8Za8ROw6GPGphV5g7i5pYqHpIlt+50hjZzSkvZQuUCRSqt2Wk8UJAnK1OPmuAzXQ9pRg7JOFAFc5fo57Snx8dsZsjOd2al0fx/sZy3jM5zO4Oqb//FpO6NkQQAoS4Y+ekWhwBu7RY6+i2ZKDwVtR7A5l7rWYk2QqbTAunosOr7KVYAnhlyS4lLiUq9PoDZXX+KHGpH+gJ8fN+dgH3aA8T0fvy23NCeAc1NqvzLJH/TIBH2+7jqbhSSI8WtcW0j7K0h1mm63gcuBUcO7D/J2UP6FSC0DofYSFw/b6WY9W5sL08t2IF/r72zWVLFST3nROouwRrdFsvWIbwRoxiVGJKEWrrYMpdJTFfIfqeJS1yqJnBeAfAW7bkO9uWSE7eebhUeYWaoWAEfnirJK68NeyoJn3zDxGoZvcKd0WRT5T5pbzPZY0Rb075TKrbSfeDK3MujoxpEgCqFcX/ZS9AsDCH3DtdNVo4n9i2N5x4EAsv764t3BPAv5WgF+9wT0iM3fy6LEoS1cGAjy/eyXLU9eQ2BEuIXJ/RALORL99GZi4qasOYjmw4fmUA8fRf90f5SYu2XOT20JREmE5jXywoaggKl9RrU811Nia7nRcSN5V/d9oOku8x8i1RNSccR9hPUg="
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
       - g++-9
+      - cmake
+      - openjdk-17-jre
 
 env:
-  - CXX=g++-9 BUILD_WRAPPER_OUT_DIR=build_wrapper_output_folder
+  - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 PATH=$JAVA_HOME/bin:$PATH CXX=g++-9 BUILD_WRAPPER_OUT_DIR=build_wrapper_output_directory
 
 script:
   # Prepare the build system
   - autoreconf --install
   - ./configure
-  - NUMBER_OF_PROCESSORS=$(nproc --all)
   # Wraps the compilation with the Build Wrapper to generate configuration (used
-  # later by the SonarQube Scanner) into the "build_wrapper_output_folder" folder
+  # later by the SonarQube Scanner) into the "build_wrapper_output_directory" folder
   - build-wrapper-linux-x86-64 --out-dir "$BUILD_WRAPPER_OUT_DIR" make clean all
   # And finally run the SonarQube analysis - read the "sonar-project.properties"
   # file to see the specific configuration
-  - sonar-scanner --define sonar.cfamily.compile-commands="$BUILD_WRAPPER_OUT_DIR/compile_commands.json"
+  - sonar-scanner
 
 cache:
   directories:
